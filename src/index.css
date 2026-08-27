@@ -1,0 +1,30 @@
+@import 'tailwindcss';
+
+/*
+ * 全局主题（Tailwind CSS v4 使用 @theme 定义设计令牌）
+ * 设计要求（AGENTS.md）：深色主题，背景 #0a0a0a、文字 #ffffff，渐变色作为强调色
+ */
+@theme {
+  --color-background: #0a0a0a;      /* 页面背景 */
+  --color-surface: #141414;         /* 卡片 / 区块背景 */
+  --color-foreground: #ffffff;      /* 主文字 */
+  --color-muted: #9ca3af;           /* 次要文字 */
+  --color-accent-cyan: #22d3ee;     /* 渐变强调色（起点） */
+  --color-accent-purple: #a855f7;   /* 渐变强调色（终点） */
+}
+
+/* 基础样式：深色背景 + 白色文字 + 平滑滚动 */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-background text-foreground antialiased;
+  font-family:
+    system-ui,
+    'Segoe UI',
+    Roboto,
+    'PingFang SC',
+    'Microsoft YaHei',
+    sans-serif;
+}
