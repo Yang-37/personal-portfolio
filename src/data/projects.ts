@@ -24,10 +24,10 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: 1,
-    name: 'trade-platform · 用户平台',
+    name: '二手交易平台',
     image: tradePlatformImg,
     description:
-      '前后端分离的全栈项目：Vue 前端 + Spring Boot 后端 + MySQL，支持账号密码与第三方登录（Gitee / QQ）、用户管理、商品发布与交易等功能，已部署上线。',
+      '前后端分离的全栈项目：Vue 前端 + Spring Boot 后端 + MySQL，支持第三方登录（Gitee / QQ）、用户管理、商品发布与交易等功能，已部署上线。',
     techStack: ['Vue', 'Spring Boot', 'MySQL', 'Sa-Token', 'Nginx'],
     url: 'https://github.com/Yang-37/trade-platform',
   },
