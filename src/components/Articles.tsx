@@ -1,9 +1,10 @@
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { articles } from '../data/articles'
 
 /**
- * 文章区块（导航「文章」）：简洁的文章卡片列表
- * 示例占位内容，后续替换为真实文章
+ * 文章区块（导航「文章」）：文章卡片列表
+ * 点击卡片进入文章详情页（/article/:id）阅读全文
  */
 function Articles() {
   return (
@@ -31,14 +32,19 @@ function Articles() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
               transition={{ duration: 0.5, delay: (index % 3) * 0.1 }}
-              className="flex flex-col rounded-2xl border border-line bg-surface p-6 transition-colors hover:border-primary/40"
+              className="group flex rounded-2xl border border-line bg-surface transition-colors hover:border-primary/40"
             >
-              <span className="text-xs font-medium text-primary">{article.tag}</span>
-              <h3 className="mt-3 text-base font-semibold leading-snug text-foreground">
-                {article.title}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted">{article.excerpt}</p>
-              <span className="mt-auto pt-4 text-xs text-muted">{article.date}</span>
+              <Link to={`/article/${article.id}`} className="flex flex-1 flex-col p-6">
+                <span className="text-xs font-medium text-primary">{article.tag}</span>
+                <h3 className="mt-3 text-base font-semibold leading-snug text-foreground transition-colors group-hover:text-primary">
+                  {article.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted">{article.excerpt}</p>
+                <span className="mt-auto flex items-center gap-1 pt-4 text-xs font-medium text-primary">
+                  阅读全文
+                  <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">→</span>
+                </span>
+              </Link>
             </motion.article>
           ))}
         </div>
