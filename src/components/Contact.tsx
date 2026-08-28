@@ -1,16 +1,14 @@
 import { motion } from 'framer-motion'
 
-// 联系方式（PRD「联系方式」：邮箱、GitHub、社交媒体链接）
+// 联系方式（PRD「联系方式」：邮箱、GitHub）
 const CONTACT_LINKS = [
   { label: '邮箱', value: 'yang1231528@163.com', href: 'mailto:yang1231528@163.com', icon: '✉️' },
   { label: 'GitHub', value: 'github.com/Yang-37', href: 'https://github.com/Yang-37', icon: '🐙' },
-  { label: 'X (Twitter)', value: 'x.com', href: 'https://x.com/', icon: '🌐' },
-  { label: '知乎', value: 'zhihu.com', href: 'https://www.zhihu.com/', icon: '📖' },
 ]
 
 /**
  * 联系方式区块（导航「联系我」）
- * 包含邮箱、GitHub 与社交媒体链接；社交链接块带 id="social" 供导航锚点跳转
+ * 包含邮箱与 GitHub 两个联系方式；社交链接块带 id="social" 供导航锚点跳转
  */
 function Contact() {
   return (
@@ -29,8 +27,8 @@ function Contact() {
           <p className="mt-4 text-muted">欢迎通过以下方式找到我，期待与你交流。</p>
         </motion.div>
 
-        {/* 联系 / 社交链接 */}
-        <div id="social" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {/* 联系链接 */}
+        <div id="social" className="grid gap-4 sm:grid-cols-2">
           {CONTACT_LINKS.map((link, index) => (
             <motion.a
               key={link.label}
@@ -40,7 +38,7 @@ function Contact() {
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.5, delay: (index % 4) * 0.08 }}
+              transition={{ duration: 0.5, delay: (index % 2) * 0.08 }}
               className="flex flex-col items-center gap-2 rounded-2xl border border-line bg-surface p-6 text-center transition-colors hover:border-primary/40"
             >
               <span className="text-2xl" aria-hidden="true">{link.icon}</span>
