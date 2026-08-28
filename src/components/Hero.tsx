@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import avatar from '../assets/avatar.svg'
+import avatar from '../assets/avatar.jpg'
 
 /**
  * 首页 Hero：现代极简风格
