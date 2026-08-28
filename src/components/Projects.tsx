@@ -18,10 +18,10 @@ function Projects() {
           transition={{ duration: 0.5 }}
           className="mb-12 text-center"
         >
-          <p className="mb-3 text-sm font-medium uppercase tracking-[0.3em] text-muted">
+          <p className="mb-3 text-sm font-medium uppercase tracking-[0.3em] text-primary">
             项目展示
           </p>
-          <h2 className="bg-gradient-to-r from-accent-cyan to-accent-purple bg-clip-text text-3xl font-bold text-transparent sm:text-4xl">
+          <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
             精选项目
           </h2>
           <p className="mt-4 text-muted">以下是我参与开发的一些项目</p>
@@ -36,7 +36,7 @@ function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
               transition={{ duration: 0.5, delay: (index % 2) * 0.1 }}
-              className="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-surface transition-colors hover:border-accent-purple/40"
+              className="group flex flex-col overflow-hidden rounded-2xl border border-line bg-surface transition-colors hover:border-primary/40"
             >
               {/* 项目截图：懒加载，悬停轻微放大 */}
               <div className="overflow-hidden">
@@ -52,7 +52,7 @@ function Projects() {
 
               {/* 内容区 */}
               <div className="flex flex-1 flex-col gap-3 p-6">
-                <h3 className="text-lg font-semibold">{project.name}</h3>
+                <h3 className="text-lg font-semibold text-foreground">{project.name}</h3>
                 <p className="text-sm leading-relaxed text-muted">{project.description}</p>
 
                 {/* 技术栈标签 */}
@@ -60,7 +60,7 @@ function Projects() {
                   {project.techStack.map((tech) => (
                     <span
                       key={tech}
-                      className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-muted"
+                      className="rounded-full border border-line bg-muted/10 px-3 py-1 text-xs text-muted"
                     >
                       {tech}
                     </span>
@@ -72,7 +72,7 @@ function Projects() {
                   href={project.url}
                   target="_blank"
                   rel="noreferrer"
-                  className="mt-auto inline-flex items-center gap-1 pt-3 text-sm font-medium text-accent-cyan transition-colors hover:text-accent-purple"
+                  className="mt-auto inline-flex items-center gap-1 pt-3 text-sm font-medium text-primary transition-colors hover:text-primary-dark"
                 >
                   查看项目
                   <span aria-hidden="true">→</span>

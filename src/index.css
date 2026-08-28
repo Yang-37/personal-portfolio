@@ -1,19 +1,46 @@
 @import 'tailwindcss';
 
+/* Tailwind v4：dark 变体绑定到 <html class="dark">（由深色模式切换按钮控制） */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /*
- * 全局主题（Tailwind CSS v4 使用 @theme 定义设计令牌）
- * 设计要求（AGENTS.md）：深色主题，背景 #0a0a0a、文字 #ffffff，渐变色作为强调色
+ * 主题令牌：通过 CSS 变量实现浅色（默认）/ 深色一键切换
+ * 浅色：浅灰白背景 + 蓝色主色调（用户指定）
+ * 深色：保留深色风格
  */
 @theme {
-  --color-background: #0a0a0a;      /* 页面背景 */
-  --color-surface: #141414;         /* 卡片 / 区块背景 */
-  --color-foreground: #ffffff;      /* 主文字 */
-  --color-muted: #9ca3af;           /* 次要文字 */
-  --color-accent-cyan: #22d3ee;     /* 渐变强调色（起点） */
-  --color-accent-purple: #a855f7;   /* 渐变强调色（终点） */
+  --color-background: var(--bg);            /* 页面背景 */
+  --color-surface: var(--surface);          /* 卡片 / 区块背景 */
+  --color-foreground: var(--fg);            /* 主文字 */
+  --color-muted: var(--muted);              /* 次要文字 */
+  --color-primary: var(--primary);          /* 主色调（蓝色） */
+  --color-primary-dark: var(--primary-dark); /* 主色调悬停 */
+  --color-primary-foreground: var(--primary-fg); /* 主色上的文字 */
+  --color-line: var(--line);                /* 边框 / 分隔线 */
 }
 
-/* 基础样式：深色背景 + 白色文字 + 平滑滚动 */
+:root {
+  --bg: #f5f5f7;
+  --surface: #ffffff;
+  --fg: #111111;
+  --muted: #6b7280;
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --primary-fg: #ffffff;
+  --line: rgba(17, 17, 17, 0.1);
+}
+
+.dark {
+  --bg: #0a0a0a;
+  --surface: #141414;
+  --fg: #ffffff;
+  --muted: #9ca3af;
+  --primary: #3b82f6;
+  --primary-dark: #2563eb;
+  --primary-fg: #ffffff;
+  --line: rgba(255, 255, 255, 0.12);
+}
+
 html {
   scroll-behavior: smooth;
 }

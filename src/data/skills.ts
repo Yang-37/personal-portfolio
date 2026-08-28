@@ -5,5 +5,12 @@ export interface Skill {
   level: number
 }
 
-// 后续在此数组中直接添加 / 修改技能即可
-export const skills: Skill[] = []
+// 示例技能数据，按需增删修改
+export const skills: Skill[] = [
+  { name: 'React / TypeScript', level: 90 },
+  { name: 'Tailwind CSS', level: 85 },
+  { name: 'Node.js', level: 75 },
+  { name: 'Vite / 前端工程化', level: 80 },
+  { name: 'UI 设计', level: 70 },
+  { name: '写作', level: 85 },
+]

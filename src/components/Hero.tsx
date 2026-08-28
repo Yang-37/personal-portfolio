@@ -2,58 +2,70 @@ import { motion } from 'framer-motion'
 import avatar from '../assets/avatar.svg'
 
 /**
- * 首页 Hero 区块（PRD「首页」：大标题 + 简介 + 头像）
- * 深色主题 + 青紫渐变强调色（AGENTS.md 设计要求）
- * 头像使用懒加载，后续可替换为本人照片（src/assets/avatar.svg）
+ * 首页 Hero：现代极简风格
+ * 浅灰白背景 + 蓝色主色调，居中对称布局
+ * 自上而下：圆形动漫头像 → 超大黑色标题 → 蓝色副标题 → 灰色简介 → 两个按钮
  */
 function Hero() {
   return (
     <section
       id="home"
-      className="relative flex min-h-svh items-center justify-center overflow-hidden px-6 py-20"
+      className="relative flex min-h-svh items-center justify-center overflow-hidden px-6 pb-16 pt-28"
     >
-      {/* 背景装饰：柔和渐变光晕，增强深色主题氛围（不影响可读性，纯装饰） */}
+      {/* 背景装饰：极简柔光（纯装饰） */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-accent-purple/20 blur-3xl"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-accent-cyan/20 blur-3xl"
+        className="pointer-events-none absolute -top-40 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-primary/10 blur-3xl"
       />
 
-      <div className="relative flex max-w-5xl flex-col items-center gap-12 sm:flex-row sm:justify-between">
-        {/* 文字区：大标题 + 简介 */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="max-w-xl text-center sm:text-left"
-        >
-          <p className="mb-4 text-sm font-medium uppercase tracking-[0.3em] text-muted">
-            你好，我是
-          </p>
-          <h1 className="bg-gradient-to-r from-accent-cyan to-accent-purple bg-clip-text text-4xl font-bold leading-tight text-transparent sm:text-6xl">
-            热爱创造的前端开发者
-          </h1>
-          <p className="mt-6 text-lg leading-relaxed text-muted">
-            专注于构建简洁、优雅、高性能的 Web 体验，这里展示我的项目与技能。
-          </p>
-        </motion.div>
-
-        {/* 头像 */}
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+        className="relative mx-auto flex max-w-3xl flex-col items-center gap-6 text-center"
+      >
+        {/* 圆形动漫头像 */}
         <motion.img
           src={avatar}
-          alt="个人头像"
+          alt="杨阳的头像"
           loading="lazy"
-          width={256}
-          height={256}
+          width={512}
+          height={512}
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, delay: 0.15, ease: 'easeOut' }}
-          className="h-48 w-48 rounded-full border-4 border-accent-cyan/30 shadow-2xl shadow-accent-purple/20 sm:h-64 sm:w-64"
+          transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
+          className="h-40 w-40 rounded-full border-4 border-surface shadow-xl shadow-primary/10 sm:h-44 sm:w-44"
         />
-      </div>
+
+        {/* 超大黑色标题 */}
+        <h1 className="text-5xl font-extrabold tracking-tight text-foreground sm:text-6xl md:text-7xl">
+          杨阳
+        </h1>
+
+        {/* 蓝色副标题 */}
+        <p className="text-lg font-medium text-primary sm:text-xl">开发者 · 写作者 · 长期主义者</p>
+
+        {/* 灰色简介 */}
+        <p className="max-w-xl leading-relaxed text-muted">
+          用代码构建产品，用文字传递思考。关注科技互联网、AI 与跨学科阅读写作。
+        </p>
+
+        {/* 按钮：蓝色实心 + 白色描边 */}
+        <div className="mt-2 flex flex-wrap items-center justify-center gap-4">
+          <a
+            href="#projects"
+            className="rounded-full bg-primary px-7 py-3 text-sm font-medium text-primary-foreground shadow-lg shadow-primary/20 transition-colors hover:bg-primary-dark"
+          >
+            查看项目
+          </a>
+          <a
+            href="#contact"
+            className="rounded-full border border-primary bg-white px-7 py-3 text-sm font-medium text-primary transition-colors hover:bg-primary/5 dark:bg-transparent"
+          >
+            联系我
+          </a>
+        </div>
+      </motion.div>
     </section>
   )
 }
