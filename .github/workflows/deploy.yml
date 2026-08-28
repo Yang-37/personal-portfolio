@@ -1,0 +1,44 @@
+name: Deploy to Server
+
+# 推送 main 分支时自动部署作品集到服务器（纯静态站，放到 /www/wwwroot/portfolio）
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 配置 Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: 构建
+        run: npm ci && npm run build
+
+      - name: 上传产物到服务器
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          port: ${{ secrets.SERVER_PORT }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          source: "dist"
+          target: /tmp/portfolio-upload
+
+      - name: 部署到站点目录
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          port: ${{ secrets.SERVER_PORT }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            rm -rf /www/wwwroot/portfolio/*
+            cp -r /tmp/portfolio-upload/dist/. /www/wwwroot/portfolio/
