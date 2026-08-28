@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@plugin '@tailwindcss/typography';
 
 /* Tailwind v4：dark 变体绑定到 <html class="dark">（由深色模式切换按钮控制） */
 @custom-variant dark (&:where(.dark, .dark *));

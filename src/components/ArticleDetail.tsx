@@ -1,9 +1,12 @@
 import { Link, useParams } from 'react-router-dom'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import Header from './Header'
 import { articles } from '../data/articles'
 
 /**
  * 文章详情页：根据 URL 中的文章 id 展示正文全文
+ * 正文支持 Markdown 渲染（标题、加粗、列表、代码块、表格等）
  * 路由：/article/:id
  */
 function ArticleDetail() {
@@ -31,15 +34,18 @@ function ArticleDetail() {
             </h1>
             <p className="mt-3 text-sm text-muted">{article.date}</p>
 
-            <div className="mt-10 space-y-6 border-t border-line pt-10">
-              {article.content
-                .split(/\n\s*\n/)
-                .filter((p) => p.trim())
-                .map((para, index) => (
-                  <p key={index} className="leading-8 text-foreground/90">
-                    {para}
-                  </p>
-                ))}
+            {/* Markdown 正文：prose 提供文章排版样式 */}
+            <div className="prose prose-neutral mt-10 max-w-none border-t border-line pt-10 dark:prose-invert">
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  a: ({ node: _node, ...props }) => (
+                    <a {...props} target="_blank" rel="noreferrer" />
+                  ),
+                }}
+              >
+                {article.content}
+              </ReactMarkdown>
             </div>
           </>
         ) : (
