@@ -9,6 +9,8 @@ import Articles from './components/Articles'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import ArticleDetail from './components/ArticleDetail'
+import ArticlesPage from './components/ArticlesPage'
+import ProjectsPage from './components/ProjectsPage'
 
 /** 首页：所有区块 + 锚点滚动（支持 /#区块 直达） */
 function HomePage() {
@@ -46,6 +48,8 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/article/:id" element={<ArticleDetail />} />
+        <Route path="/articles" element={<ArticlesPage />} />
+        <Route path="/projects" element={<ProjectsPage />} />
       </Routes>
     </BrowserRouter>
   )

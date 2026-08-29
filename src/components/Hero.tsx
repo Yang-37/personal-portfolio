@@ -28,7 +28,8 @@ function Hero() {
         <motion.img
           src={avatar}
           alt="杨阳的头像"
-          loading="lazy"
+          loading="eager"
+          fetchPriority="high"
           width={512}
           height={512}
           initial={{ opacity: 0, scale: 0.9 }}

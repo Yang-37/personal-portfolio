@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom'
 // 顶部导航菜单项（对应页面各区块，使用 /#锚点 以便在文章详情页也能跳回首页对应区块）
 const NAV_ITEMS = [
   { label: '关于我', href: '/#about' },
-  { label: '项目', href: '/#projects' },
-  { label: '文章', href: '/#articles' },
+  { label: '项目', href: '/projects' },
+  { label: '文章', href: '/articles' },
   { label: '社交媒体', href: '/#social' },
   { label: '联系我', href: '/#contact' },
 ]
