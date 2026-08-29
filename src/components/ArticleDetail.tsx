@@ -5,13 +5,13 @@ import Header from './Header'
 import { articles } from '../data/articles'
 
 /**
- * 文章详情页：根据 URL 中的文章 id 展示正文全文
+ * 文章详情页：根据 URL 中的 Markdown 文件名展示正文全文
  * 正文支持 Markdown 渲染（标题、加粗、列表、代码块、表格等）
  * 路由：/article/:id
  */
 function ArticleDetail() {
   const { id } = useParams()
-  const article = articles.find((a) => a.id === Number(id))
+  const article = articles.find((a) => a.id === id)
 
   return (
     <div className="min-h-svh bg-background text-foreground">

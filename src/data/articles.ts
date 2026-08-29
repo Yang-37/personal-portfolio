@@ -1,111 +1,49 @@
-// 文章数据（TECH_DESIGN.md：数据存储在 TypeScript 文件中）
-// 正文支持 Markdown 语法：标题（##）、加粗（**）、列表（-）、代码块（```）、链接等
+/** 从 Markdown 文件解析出的文章数据。 */
 export interface Article {
-  id: number
-  /** 文章标题 */
+  /** Markdown 文件名，同时作为文章 URL。 */
+  id: string
   title: string
-  /** 发布日期 */
   date: string
-  /** 分类标签 */
   tag: string
-  /** 摘要 */
   excerpt: string
-  /** 正文（Markdown 格式） */
   content: string
 }
 
-// 示例文章数据：正文为占位内容，后续替换为真实文章即可
-export const articles: Article[] = [
-  {
-    id: 1,
-    title: '从零搭建个人作品集网站',
-    date: '2026-08',
-    tag: '前端',
-    excerpt: '记录我用 React + Vite + Tailwind CSS 从零搭建这个作品集网站的完整过程与踩坑经验。',
-    content: `## 为什么要有个人作品集
+type ArticleMeta = Omit<Article, 'id' | 'content'>
 
-对于开发者来说，作品集不仅是展示能力的窗口，更是对自己一段时间内思考与实践的沉淀。它让陌生人快速了解你，也让未来的自己回顾成长轨迹。
+/** 解析 Markdown 顶部的文章信息。 */
+function parseArticle(path: string, source: string): Article {
+  const match = source.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/)
+  if (!match) throw new Error('文章 ' + path + ' 缺少有效的 front matter')
+  const metadata = Object.fromEntries(
+    match[1].split(/\r?\n/).filter((line) => line.trim()).map((line) => {
+      const separator = line.indexOf(':')
+      const key = line.slice(0, separator).trim()
+      const value = line.slice(separator + 1).trim().replace(/^(['"])(.*)\1$/, '$2')
+      return [key, value]
+    }),
+  ) as Partial<ArticleMeta>
+  const requiredFields: (keyof ArticleMeta)[] = ['title', 'date', 'tag', 'excerpt']
+  for (const field of requiredFields) {
+    if (!metadata[field]) throw new Error('文章 ' + path + ' 缺少 ' + field + ' 字段')
+  }
+  return {
+    id: path.split('/').pop()!.replace(/\.md$/, ''),
+    title: metadata.title!,
+    date: metadata.date!,
+    tag: metadata.tag!,
+    excerpt: metadata.excerpt!,
+    content: match[2].trim(),
+  }
+}
 
-## 技术选型
+// 新增 .md 文件后 Vite 会自动将它加入文章列表，无需修改代码。
+const markdownFiles = import.meta.glob('../content/articles/*.md', {
+  eager: true,
+  query: '?raw',
+  import: 'default',
+}) as Record<string, string>
 
-- **React + TypeScript**：类型安全，开发体验好
-- **Vite**：构建快，热更新流畅
-- **Tailwind CSS**：原子化样式，不用切文件
-
-> 这套组合的好处是生态成熟，遇到问题很容易找到答案。
-
-## 部署流程
-
-代码推送后，GitHub Actions 会自动完成：
-
-1. 构建前端产物
-2. 上传到服务器
-3. 替换站点目录
-
-整个过程只需要一行命令：
-
-\`\`\`bash
-git push
-\`\`\`
-
-## 收获
-
-走完这个过程，收获的不仅是一个网站，更是一套完整的工程实践。`,
-  },
-  {
-    id: 2,
-    title: '我如何理解「长期主义」',
-    date: '2026-07',
-    tag: '思考',
-    excerpt: '关于坚持、复利与选择：为什么我相信持续做正确的小事，比偶尔的爆发更有力量。',
-    content: `## 长期主义不是「坚持」
-
-长期主义不是简单地「坚持」，而是相信时间会放大正确的选择。它要求我们在短期收益不明显时，依然愿意投入精力去做那些长期有价值的事：**持续写作、持续学习、持续打磨作品**。
-
-## 复利是反直觉的
-
-复利效应最反直觉的地方在于：前期的积累几乎看不见变化。但正是那些不起眼的日常，在足够长的时间尺度上，构成了质变的基础。
-
-- 写作一百篇、一千篇，和写三五篇的感受完全不同
-- 每天读 20 分钟书，一年就是 120 小时
-- 每天改进一点，一年就是 365 个细节
-
-## 长期主义也需要方向感
-
-把时间花在错误的方向上，坚持得越久损失越大。所以：
-
-1. 定期复盘
-2. 及时调整
-3. 保持清醒的耐心
-
-对我而言，做一个「长期主义者」意味着：把身体、学习和作品当作值得终身投入的资产，不急于证明什么，只在乎自己是否在正确的方向上持续前进。`,
-  },
-  {
-    id: 3,
-    title: 'AI 时代的阅读与写作',
-    date: '2026-06',
-    tag: 'AI',
-    excerpt: '当 AI 可以代写一切时，真正的思考反而变得更加珍贵。聊聊我的输入与输出方法。',
-    content: `## 表达变得廉价，思考变得珍贵
-
-AI 的出现让「表达」变得廉价：一段提示词就能生成一篇文章、一份报告。但这恰恰意味着，真正稀缺的不再是表达本身，而是表达背后的**思考与判断**。
-
-## 阅读的意义变了
-
-过去我们阅读是为了获取信息，现在信息唾手可得；阅读更大的意义，变成了：
-
-- 建立自己的知识框架
-- 训练对信息的鉴别力
-- 形成独立的判断
-
-## 我的方法
-
-**输入：** 以问题为导向阅读，遇到好内容先记录，再定期整理成自己的笔记。
-
-**输出：** 坚持把学到的东西用文字讲清楚——能讲清楚，才说明真的理解了。
-
-> AI 是强大的助手，但思考这件事，终究要自己完成。
-
-工具会迭代，而一个人的判断力、审美和价值观，才是真正无法被替代的东西。`,
-  },
-]
+export const articles = Object.entries(markdownFiles)
+  .map(([path, source]) => parseArticle(path, source))
+  .sort((a, b) => b.date.localeCompare(a.date))
